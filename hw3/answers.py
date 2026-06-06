@@ -6,7 +6,7 @@ math (delimited with $$).
 """
 
 
-CUSTOM_DATA_URL = "https://s3.amazonaws.com/fast-ai-imageclas/stanford-cars.tgz"
+CUSTOM_DATA_URL = "http://cs231n.stanford.edu/tiny-imagenet-200.zip"
 
 
 def vae_hyperparams():
