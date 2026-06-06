@@ -151,7 +151,6 @@ class VAE(nn.Module):
         samples = []
         device = next(self.parameters()).device
         with torch.no_grad():
-            pass
             # TODO:
             #  Sample from the model. Generate n latent space samples and
             #  return their reconstructions.
@@ -161,7 +160,9 @@ class VAE(nn.Module):
             #    Instead of sampling from N(psi(z), sigma2 I), we'll just take
             #    the mean, i.e. psi(z).
             # ====== YOUR CODE: ======
-
+            z = torch.randn(n, self.z_dim, device=device)
+            reconstructions = self.decode(z)
+            samples = [reconstructions[i] for i in range(n)]
             # ========================
 
         # Detach and move to CPU for display purposes
