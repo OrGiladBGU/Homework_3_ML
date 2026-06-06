@@ -139,7 +139,9 @@ class VAE(nn.Module):
         #  1. Convert latent z to features h with a linear layer.
         #  2. Apply features decoder.
         # ====== YOUR CODE: ======
-
+        h_flat = self.z_to_features(z)
+        h = h_flat.reshape(h_flat.size(0), *self.features_shape)
+        x_rec = self.features_decoder(h)
         # ========================
 
         # Scale to [-1, 1] (same dynamic range as original images).
