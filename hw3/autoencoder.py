@@ -194,7 +194,18 @@ def vae_loss(x, xr, z_mu, z_log_sigma2, x_sigma2):
     #  1. The covariance matrix of the posterior is diagonal.
     #  2. You need to average over the batch dimension.
     # ====== YOUR CODE: ======
+    d_x = x.shape[1] * x.shape[2] * x.shape[3]
+    d_z = z_mu.shape[1]
 
+    data_loss = ((x - xr) ** 2).sum(dim=[1, 2, 3]).mean() / (x_sigma2 * d_x)
+    
+    tr_sigma = z_log_sigma2.exp().sum(dim=1)
+    mu_norm2 = (z_mu ** 2).sum(dim=1)
+    log_det_sigma = z_log_sigma2.sum(dim=1)
+    
+    kldiv_loss = (tr_sigma + mu_norm2 - d_z - log_det_sigma).mean()
+    
+    loss = data_loss + kldiv_loss
     # ========================
 
     return loss, data_loss, kldiv_loss
